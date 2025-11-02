@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #cfd9ff, #e8d8ff);
+  transition: background 0.5s ease;
+  scroll-behavior: smooth;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 999;
+  transition: background 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-weight: 700;
+  color: #333;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #0078ff;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+  color: #fff;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* === Form Card Fix === */
+.form-card.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  padding: 2rem 4rem 2rem 4rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* === Floating Inputs Fix === */
+.form-group.floating {
+  position: relative;
+  margin-bottom: 1.8rem;
+}
+
+.form-group.floating input,
+.form-group.floating textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.25); /* reduce glass intensity */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #111;
+  transition: all 0.3s ease;
+}
+
+.form-group.floating input:focus,
+.form-group.floating textarea:focus {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(100, 200, 255, 0.4);
+}
+
+/* === Floating Labels === */
+.form-group.floating label {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.form-group.floating input:focus + label,
+.form-group.floating input:not(:placeholder-shown) + label,
+.form-group.floating textarea:focus + label,
+.form-group.floating textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 12px;
+  font-size: 0.8rem;
+  color: #007aff;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0 6px;
+  border-radius: 4px;
+}
+
+/* === Submit Button === */
+.glow-button {
+  width: 100%;
+  background: linear-gradient(90deg, #007aff, #00c6ff);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.5);
+}
+
+/* === Result Card === */
+.result-card.glass {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* === Chat Appearance (AI Recommendation Section) === */
+.chat-message {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  line-height: 1.5;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 0.8rem;
+}
+
+.chat-message strong {
+  display: block;
+  font-weight: 600;
+  color: #0078ff;
+  margin-bottom: 0.4rem;
+}
+
+.chat-message {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin-top: 1rem;
+  line-height: 1.6;
+  animation: fadeInUp 0.6s ease-in-out;
+}
+
+.chat-message strong {
+  display: block;
+  color: #0078ff;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+
+body.dark .chat-message {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f5f5f5;
+}
+
+body.dark .chat-message strong {
+  color: #4da6ff;
+}
+
+
+/* ===== Glass Form Section ===== */
+ .form-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem ;
+}
+
+
+
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(183, 29, 29, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.form-card {
+  padding: 2.5rem 3rem;
+  max-width: 600px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.floating input,
+.floating textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.5);
+  color: #333;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.floating input:focus,
+.floating textarea:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.floating label {
+  position: absolute;
+  top: 0.8rem;
+  left: 1rem;
+  color: #555;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.floating input:focus + label,
+.floating input:valid + label,
+.floating textarea:focus + label,
+.floating textarea:valid + label {
+  top: -0.7rem;
+  left: 0.8rem;
+  font-size: 0.8rem;
+  color: #0078ff;
+  background: rgba(255,255,255,0.8);
+  padding: 0 0.3rem;
+  border-radius: 4px;
+}
+
+.glow-button {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #0078ff, #00bcd4);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.result-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+}
+
+/* ===== Info Sections ===== */
+.info-section {
+  padding: 4rem 1rem ;
+  text-align: center;
+}
+
+.info-section h2 {
+  margin-bottom: 2rem;
+}
+
+.info-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.info-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 280px;
+  font-weight: 500;
+  transition: transform 0.3s ease, box-shadow 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* ===== Contact Section ===== */
+.contact-section a {
+  color: #0078ff;
+  text-decoration: none;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Dark Mode ===== */
+body.dark {
+  background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+  color: #f5f5f5;
+}
+
+body.dark .glass {
+  background: rgba(40, 40, 60, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark .nav-links a,
+body.dark .logo,
+body.dark .theme-toggle {
+  color: #fff;
+}
+
+body.dark .floating input,
+body.dark .floating textarea {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
