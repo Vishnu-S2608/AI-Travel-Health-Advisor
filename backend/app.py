@@ -133,6 +133,32 @@ async def assess(payload: RequestPayload):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Weather fetch failed: {e}")
 
+    # ===============================================
+    # 🔹 Prepare data for the graph (±3 days)
+    # ===============================================
+    daily = data.get("daily", {})
+    dates = daily.get("time", [])
+    temps_avg = [
+        round((tmin + tmax) / 2, 1)
+        for tmin, tmax in zip(daily.get("temperature_2m_min", []), daily.get("temperature_2m_max", []))
+    ]
+
+    target_date = datetime.fromisoformat(payload.date).date()
+    forecastGraph = []
+
+    for i, d in enumerate(dates):
+        date_obj = datetime.fromisoformat(d).date()
+        delta = (date_obj - target_date).days
+        # Keep only ±3 days
+        if -3 <= delta <= 3:
+            forecastGraph.append({
+                "date": d,
+                "temp": temps_avg[i]
+            })
+
+    # ===============================================
+    # 🔹 Build prompt for Gemini
+    # ===============================================
     prompt_vars = {
         "temp": payload.temp,
         "symptoms": ", ".join(payload.symptoms) if payload.symptoms else "none",
@@ -146,9 +172,13 @@ async def assess(payload: RequestPayload):
 
     suggestion = generate_ai_reasoning_with_langchain(prompt_vars)
 
+    # ===============================================
+    # 🔹 Final response
+    # ===============================================
     return {
         "recommendation": suggestion,
         "city": f"{name}, {country}" if name and country else payload.city,
         "date": payload.date,
         "forecast": forecast,
+        "forecastGraph": forecastGraph,  # ✅ Added this line
     }

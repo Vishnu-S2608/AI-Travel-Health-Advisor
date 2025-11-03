@@ -21,12 +21,13 @@ themeToggle.addEventListener("click", () => {
 });
 
 // ============================
-// Backend logic (unchanged core, improved grouping)
+// Backend logic (main app flow)
 // ============================
 const form = document.getElementById("healthForm");
 const resultCard = document.getElementById("result");
 const recommendationText = document.getElementById("recommendationText");
 const forecastDetails = document.getElementById("forecastDetails");
+const weatherChart = document.getElementById("weatherChart");
 const submitBtn = document.getElementById("submitBtn");
 
 form.addEventListener("submit", async (e) => {
@@ -61,13 +62,15 @@ form.addEventListener("submit", async (e) => {
 
     const data = await response.json();
 
-    // Show result card
+    // ============================
+    // Show AI Recommendation
+    // ============================
     resultCard.classList.remove("hidden");
     recommendationText.innerHTML = ""; // Clear old content
 
     const text = data.recommendation || "No response from AI.";
 
-    // 🔹 Split text by ** markers and group title + content
+    // Split text by ** markers and display as grouped sections
     const parts = text.split(/\*\*(.*?)\*\*/g).map((p) => p.trim()).filter((p) => p);
     for (let i = 0; i < parts.length; i += 2) {
       const title = parts[i];
@@ -85,10 +88,72 @@ form.addEventListener("submit", async (e) => {
       }, i * 400);
     }
 
-    // 🔹 Show forecast details
+    // ============================
+    // Show forecast details
+    // ============================
     forecastDetails.textContent = `📍 Destination: ${data.city}
 🗓️ Date: ${data.date}
 🌡️ Forecast: ${data.forecast.min}°C – ${data.forecast.max}°C, ${data.forecast.description}`;
+
+    // ============================
+    // Weather Forecast Graph (±3 days)
+    // ============================
+    if (data.forecastGraph && Array.isArray(data.forecastGraph)) {
+      weatherChart.classList.remove("hidden");
+
+      const labels = data.forecastGraph.map((d) => d.date);
+      const temps = data.forecastGraph.map((d) => d.temp);
+
+      // Destroy old chart if exists
+      if (window.weatherChartInstance) {
+        window.weatherChartInstance.destroy();
+      }
+
+      const ctx = weatherChart.getContext("2d");
+      window.weatherChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Temperature (°C)",
+              data: temps,
+              borderColor: "#2563eb",
+              backgroundColor: "rgba(37, 99, 235, 0.2)",
+              fill: true,
+              tension: 0.3,
+              borderWidth: 2,
+              pointRadius: 4,
+              pointBackgroundColor: "#1e3a8a",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: "7-Day Temperature Forecast",
+              color: "#333",
+              font: { size: 16, weight: "bold" },
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              title: { display: true, text: "°C" },
+            },
+            x: {
+              title: { display: true, text: "Date" },
+            },
+          },
+        },
+      });
+    } else {
+      // Hide chart if no data
+      weatherChart.classList.add("hidden");
+    }
   } catch (err) {
     resultCard.classList.remove("hidden");
     recommendationText.textContent = `❌ Error: ${err.message}`;

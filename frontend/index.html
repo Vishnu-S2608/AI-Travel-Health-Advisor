@@ -6,6 +6,7 @@
   <title>AI Travel Health Advisor</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -43,11 +44,11 @@
           <input type="text" id="symptoms" placeholder="" />
           <label for="symptoms">Symptoms (comma-separated)</label>
         </div>
-
         <div class="form-group floating">
-          <textarea id="other" placeholder=""></textarea>
-          <label for="other">Other Health Notes</label>
+          <input type="text" id="other" placeholder="" />
+          <label for="other">Other Notes</label>
         </div>
+
 
         <div class="form-group floating">
           <input type="text" id="city" required />
@@ -66,6 +67,7 @@
         <h2>AI Recommendation</h2>
         <div id="recommendationText"></div>
         <div id="forecastDetails"></div>
+        <canvas id="weatherChart" class="weather-chart hidden"></canvas>
       </div>
     </div>
   </section>
