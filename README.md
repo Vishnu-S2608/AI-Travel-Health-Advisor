@@ -25,6 +25,7 @@ Backend: Python (FastAPI)
 AI Model: Gemini 1.5 Flash
 Weather API: Open-Meteo
 
+DEMO : https://ai-travel-health-advisor.netlify.app/
 
 setup_instructions:
   - step: 1️⃣ Clone the Repository
